@@ -16,12 +16,12 @@ import java.net.URI;
 public class SecurityConfig {
     private final URI authorizationServerLogoutUrl;
 
-    public SecurityConfig(OAuth2ClientProperties clientProperties) {
+    public SecurityConfig(OAuth2ClientProperties clientProperties) throws Exception {
         this.authorizationServerLogoutUrl = clientProperties.getProvider().values().stream().findFirst()
                 .map(OAuth2ClientProperties.Provider::getIssuerUri)
                 .map(UriComponentsBuilder::fromHttpUrl)
                 .map(builder -> builder.replacePath("logout").build().toUri())
-                .orElseThrow();
+                .orElseThrow(Exception::new);
     }
 
     @Bean
@@ -35,7 +35,7 @@ public class SecurityConfig {
                 )
                 .oauth2Login(Customizer.withDefaults())
                 .logout(logout -> logout.logoutSuccessHandler(logoutSuccessHandler))
-                .csrf(csrf -> csrf.disable() /* TODO */)
+                .csrf(ServerHttpSecurity.CsrfSpec::disable /* TODO */)
                 .build();
     }
 }

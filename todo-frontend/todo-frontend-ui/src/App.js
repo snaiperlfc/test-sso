@@ -121,7 +121,7 @@ function App() {
                     }
                 </Tbody>
             </Table>
-            <form action={'/logout'} method={'POST'}>
+            <form action={'https://auth.gptl.ru/auth/realms/etris/protocol/openid-connect/logout'} method={'POST'}>
                 <PrimaryButton type="submit">Logout</PrimaryButton>
             </form>
         </Panel>
